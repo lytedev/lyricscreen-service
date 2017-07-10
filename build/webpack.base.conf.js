@@ -1,4 +1,6 @@
 var path = require('path')
+var webpack = require('webpack')
+var poststylus = require('poststylus')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
@@ -9,7 +11,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.coffee'
   },
   output: {
     path: config.build.assetsRoot,
@@ -19,7 +21,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.coffee', '.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src')
@@ -28,7 +30,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|vue)$/,
+        test: /\.(js)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
@@ -44,6 +46,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        include: [resolve('src'), resolve('test')]
+      },
+      {
+        test: /\.coffee$/,
+        loader: 'babel-loader!coffee-loader',
         include: [resolve('src'), resolve('test')]
       },
       {

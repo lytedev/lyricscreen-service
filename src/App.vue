@@ -1,30 +1,28 @@
-<template>
-  <div id="app">
-    <header>
-      <span>LyricScreen</span>
-    </header>
-    <main>
-      <img src="./assets/logo.png" alt="Vue.js PWA">
-      <router-view></router-view>
-    </main>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'app'
-}
+<script lang="coffee">
+export default
+	name: 'app'
 </script>
 
-<style>
-body {
-  margin: 0;
-}
+<template lang="pug">
+	#app
+		app-head
+		main-menu
+		router-view
+</template>
 
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
+<style lang="stylus">
+@import 'variables.styl'
+@import url('https://fonts.googleapis.com/css?family=Lato')
+
+html
+	font-size 62.5%
+
+body
+	margin 0
+	background-color #111111
+	color #ffffff
+	font 1.6rem Lato
+
+	@media screen and (min-width: $desktop-breakpoint)
+		font-size 1.8rem
 </style>
