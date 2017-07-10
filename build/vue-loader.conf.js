@@ -7,7 +7,15 @@ module.exports = {
     sourceMap: isProduction
       ? config.build.productionSourceMap
       : config.dev.cssSourceMap,
-    postcss: [require('poststylus')],
-    extract: isProduction
+    postcss: [
+      require('poststylus'),
+      {
+        preferPathResolver: 'webpack'
+      }
+    ],
+    extract: isProduction,
+    stylus: {
+      preferPathResolver: 'webpack'
+    }
   })
 }
