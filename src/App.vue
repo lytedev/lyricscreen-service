@@ -1,26 +1,8 @@
 <script lang="coffee">
-import MainMenu from '@/components/MainMenu'
-import AppHead from '@/components/AppHead'
-
-export default
-	name: 'app'
-	data: ->
-		showMenu: false
-	components:
-		AppHead: AppHead
-		MainMenu: MainMenu
-	methods:
-		toggleMenu: ->
-			console.log "App toggleMenu"
-			this.showMenu = not this.showMenu
-
 </script>
 
 <template lang="pug">
-#app
-	app-head
-	main-menu(:show="showMenu")
-	router-view(v-on:toggle-menu="toggleMenu")
+#app: router-view
 </template>
 
 <style lang="stylus">
@@ -44,7 +26,24 @@ body
 
 #app
 	display flex
-	flex-wrap wrap
 	position relative
 	min-height 100vh
+
+.text-center
+	text-align center
+
+p
+	margin 0
+
+p ~ p
+	margin-top 1em
+
+.page
+	display flex
+	position relative
+	min-height 100vh
+
+	.content
+		flex-grow 1
+		padding 1rem
 </style>

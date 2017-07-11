@@ -13,6 +13,7 @@ export default new Vuex.Store
 			fullname: 'Daniel Flanagan'
 		playlists:
 			'p_hash_id_1?':
+				name: "Defull"
 				songs: [
 					's_hash_id_1'
 					's_hash_id_2'

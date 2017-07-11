@@ -1,60 +1,61 @@
 <script lang="coffee">
-import Modal from '@/components/Modal'
+import AboutModal from '@/components/modals/About'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
 
 export default
 	props:
 		show:
-			default: false
+			default: true
+		title:
+			default: "Menu Title"
+		subtitle:
+			default: "Menu Subtitle"
 	data: ->
-		showModal: false
-		title: "Song List"
-		subtitle: "Playlist: Default"
+		showAbout: false
 	computed:
 		songs: -> this.$store.getters.currentSongs
 	components:
 		Logo: Logo
-		Modal: Modal
+		AboutModal: AboutModal
 		Btn: Button
 	methods:
 		closeModal: ->
-			this.showModal = false
+			this.showAbout = false
 </script>
 
 <template lang="pug">
-#main-menu(v-show="show")
+.menu(:class="{ shown: show }")
 	header
 		.title {{ title }}
 		.subtitle(v-show="subtitle.length > 0") {{ subtitle }}
-	modal(v-bind:show="showModal" v-bind:on-close="closeModal" title="Modal")
-		div(slot="content")
-			p This is a test.
-			p So is this.
-		div(slot="actions")
-			btn(@click.stop.prevent="closeModal") Cancel
-			btn(@click.stop.prevent="closeModal") OK
-	ul
-		li(v-for="s in songs") {{ s.name }}
-		.separator
-		li Add Song...
-	logo
+	slot
 </template>
 
 <style lang="stylus">
 @require '~@/variables'
 
-#main-menu
+.menu
 	width 30rem
 	height 100vh
 	border-right solid 0.1rem $brand-primary-color
 	box-shadow 0.1rem 0.0rem 1rem alpha($brand-primary-color-dark, 0.5)
 	overflow auto
 
+	transition margin-left 0.5s cubic-bezier(0, 0.73, 0, 0.99), opacity 1.5s cubic-bezier(0, 0.73, 0, 0.99)
+	margin-left -30rem
+	opacity 0
+
 	display flex
 	flex-direction column
 
-	opacity 1
+
+	&.shown
+		margin-left 0
+		opacity 1
+
+	.bottom
+		margin-top auto
 
 	ul
 		list-style none
@@ -69,8 +70,9 @@ export default
 			&:hover
 				background-color #333
 
-		.separator
-			border-bottom solid 1px #444
+			&.separator
+				padding 0
+				border-bottom solid 1px #444
 
 	> header
 		text-align center

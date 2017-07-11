@@ -6,34 +6,45 @@ export default
 		title:
 			type: String
 			default: ""
-		onClose:
-			required: true
-			type: Function
-		showInitially: {}
 		show:
 			default: false
 	methods:
 		close: (args...) ->
-			console.log "Modal.close()", args
-			this.onClose args
+			this.$emit 'close'
 	components:
 		Btn: Button
 </script>
 
 <template lang="pug">
-.modal-root(v-if="show")
-	.mask(@click.stop.prevent="close")
-		.container
-			.modal(@click.stop.prevent="")
-				.close-button(@click.stop.prevent="close") &times;
-				header(v-if="title.length > 0"): | {{ title }}
-				.content: slot(name="content")
-				footer
-					slot(name="actions")
+.modal-root
+	transition(name="fade-and-scale-down")
+		.mask(@click.stop.prevent="close" v-if="show")
+			.container
+				.modal(@click.stop.prevent="" v-if="show")
+					.close-button(@click.stop.prevent="close") &times;
+					header(v-if="title.length > 0"): | {{ title }}
+					.content: slot(name="content")
+					footer
+						slot(name="actions")
 </template>
 
 <style lang="stylus">
 @require '~@/variables'
+
+.fade-enter-active
+.fade-leave-active
+	transition opacity 0.5s $slow-ease-out
+.fade-enter
+.fade-leave-to
+	opacity 0
+
+.fade-and-scale-down-enter-active
+.fade-and-scale-down-leave-active
+	transition all 0.5s $slow-ease-out
+.fade-and-scale-down-enter
+.fade-and-scale-down-leave-to
+	opacity 0
+	transform scale(1.5)
 
 .modal-root
 	.mask
@@ -44,9 +55,23 @@ export default
 		right 0
 		background-color rgba(0, 0, 0, 0.7)
 
+		transform scale(1)
+		opacity 1
+
 		display flex
 		justify-content center
 		align-items center
+
+		&.fade-and-scale-down-enter-active
+			transition all 0.5s $slow-ease-out
+
+		&.fade-and-scale-down-leave-active
+			transition all 0.2s ease
+
+		&.fade-and-scale-down-enter
+		&.fade-and-scale-down-leave-to
+			opacity 0
+			transform scale(1.5)
 
 		.container
 			// dunno
@@ -60,8 +85,12 @@ export default
 			overflow auto
 			background-color #111
 			border-radius 0.3rem
+			border solid 0.1rem #444
 			display flex
 			flex-direction column
+
+			opacity 1
+			transform scale(1)
 
 			@media screen and (min-width: 1024px)
 				max-width 600px
