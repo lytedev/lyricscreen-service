@@ -74,8 +74,13 @@ modal#login-register-modal(:title="title" :show="show" @close="close")
 					input(id="pass" name="pass" type="password" placeholder="Password" tabindex="101")
 			p.small.center Need an account?
 				btn.small.negative(@click="overrideView = 'register'" tabindex="105") Register Here!
+
 		.register-form(v-if="_view == 'register'")
 			form
+				//- TODO: captcha pliss
+				//- .field
+					label(for="username")
+					input(id="username" name="username" placeholder="Username" tabindex="100")
 				.field
 					label(for="email")
 					input(id="email" name="email" placeholder="Email" tabindex="100")
