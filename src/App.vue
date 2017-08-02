@@ -7,6 +7,7 @@
 
 <style lang="stylus">
 @import 'variables.styl'
+@import 'globals.styl'
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700')
 
 html

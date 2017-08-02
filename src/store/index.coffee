@@ -7,10 +7,10 @@ Vue.use Vuex
 
 export default new Vuex.Store
 	state:
-		user:
-			username: 'lytedev'
-			email: 'daniel@lytedev.io'
-			fullname: 'Daniel Flanagan'
+		user: {}
+			# username: 'lytedev'
+			# email: 'daniel@lytedev.io'
+			# fullname: 'Daniel Flanagan'
 		playlists:
 			'p_hash_id_1?':
 				name: "Defull"

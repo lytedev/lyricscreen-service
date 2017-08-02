@@ -1,5 +1,5 @@
 <script lang="coffee">
-import AboutModal from '@/components/modals/About'
+import LoginRegisterModal from '@/components/modals/LoginRegister'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
 
@@ -12,24 +12,36 @@ export default
 		subtitle:
 			default: "Menu Subtitle"
 	data: ->
-		showAbout: false
+		showLoginRegister: false
+		lrmView: 'login'
 	computed:
 		songs: -> this.$store.getters.currentSongs
 	components:
 		Logo: Logo
-		AboutModal: AboutModal
+		LoginRegisterModal: LoginRegisterModal
 		Btn: Button
 	methods:
-		closeModal: ->
-			this.showAbout = false
+		showLoginRegisterModal: (view) ->
+			this.lrmView = view
+			this.showLoginRegister = true
+
+		closeLoginRegisterModal: ->
+			this.showLoginRegister = false
 </script>
 
 <template lang="pug">
 .menu(:class="{ shown: show }")
+	login-register-modal(:show="showLoginRegister" @close="closeLoginRegisterModal" :view="lrmView")
 	header
 		.title {{ title }}
 		.subtitle(v-show="subtitle.length > 0") {{ subtitle }}
 	slot
+	slot(name="user")
+		ul
+			li.separator
+			li.row
+				a.item(@click="showLoginRegisterModal('login')") Login
+				a.item(@click="showLoginRegisterModal('register')") Register
 </template>
 
 <style lang="stylus">
@@ -73,6 +85,26 @@ export default
 			&.separator
 				padding 0
 				border-bottom solid 1px #444
+
+			&.row
+				padding 0rem
+				display flex
+				cursor auto
+
+				&:hover
+					background-color inherit
+
+				.item
+					padding 1rem
+					flex-grow 1
+					cursor pointer
+					transition background-color 0.5s ease
+
+					~ .item
+						border-left solid 0.1rem #444
+
+					&:hover
+						background-color #333
 
 	> header
 		text-align center
