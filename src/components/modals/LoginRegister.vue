@@ -3,10 +3,15 @@ import _ from 'lodash'
 import Modal from '@/components/Modal'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
+import Config from '@/config'
+import FormMixin from '@/components/mixins/form'
 
 import pkgInfo from '@/../package.json'
 
-export default
+export default {
+	mixins: [
+		FormMixin
+	]
 	props:
 		view:
 			default: 'login'
@@ -18,7 +23,8 @@ export default
 	computed:
 		title: -> if @_view == 'login' then "Login" else "Register"
 		ctaText: -> if @_view == 'login' then "Login" else "Register"
-		_view: -> if @overrideView? then @overrideView else @view
+		apiUrl: -> Config.apiUrl
+		'_view': -> if @overrideView? then @overrideView else @view
 	components:
 		Logo: Logo
 		Modal: Modal
@@ -53,12 +59,21 @@ export default
 					first.focus()
 
 	methods:
+		submitRegistration: (form) ->
+			options = { method: 'POST' }
+			@ajaxForm(form, options).then (res) ->
+				console.log 'submitForm', res
+
 		submitForm: (args...) ->
-			console.log args
+			form = @$refs[@_view + 'Form']
+			console.log 'submitForm()', form
+			if @_view == 'register' then @submitRegistration(form)
+			else if @_view == 'login' then @submitLogin(form)
 
 		close: (args...) ->
 			@overrideView = null
 			@$emit 'close'
+}
 </script>
 
 <template lang="pug">
@@ -76,7 +91,7 @@ modal#login-register-modal(:title="title" :show="show" @close="close")
 				btn.small.negative(@click="overrideView = 'register'" tabindex="105") Register Here!
 
 		.register-form(v-if="_view == 'register'")
-			form
+			form(:action="apiUrl + '/users'" ref="registerForm")
 				//- TODO: captcha pliss
 				//- .field
 					label(for="username")

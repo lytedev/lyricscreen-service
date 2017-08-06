@@ -1,5 +1,6 @@
 <script lang="coffee">
 import Menu from '@/components/Menu'
+import Button from '@/components/Button'
 import AboutModal from '@/components/modals/About'
 
 export default
@@ -16,6 +17,7 @@ export default
 	methods:
 		closeAbout: -> this.showAbout = false
 	components:
+		Btn: Button
 		SideMenu: Menu
 		AboutModal: AboutModal
 </script>
@@ -24,9 +26,9 @@ export default
 side-menu(:show="show" title="Song List" :subtitle="subtitle")
 	about-modal(:show="showAbout" @close="closeAbout")
 	ul
-		li(v-for="s in songs") {{ s.name }}
+		li(v-for="s in songs"): btn {{ s.name }}
 		li.separator
-		li Add Song...
+		li: btn Add Song...
 
 	.bottom
 		ul
@@ -51,7 +53,6 @@ side-menu(:show="show" title="Song List" :subtitle="subtitle")
 	display flex
 	flex-direction column
 
-
 	&.shown
 		margin-left 0
 		opacity 1
@@ -65,12 +66,9 @@ side-menu(:show="show" title="Song List" :subtitle="subtitle")
 		margin 0
 
 		li
-			padding 1rem
-			cursor pointer
-			transition background-color 0.5s ease
-
-			&:hover
-				background-color #333
+			button
+				display block
+				width 100%
 
 			&.separator
 				padding 0

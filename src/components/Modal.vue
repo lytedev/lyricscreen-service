@@ -21,7 +21,7 @@ export default
 		.mask(@click.stop.prevent="close" v-if="show")
 			.container
 				.modal(@click.stop.prevent="" v-if="show")
-					.close-button(@click.stop.prevent="close") &times;
+					btn.close-button(@click.stop.prevent="close" tabindex="150") &times;
 					header(v-if="title.length > 0"): | {{ title }}
 					.content: slot(name="content")
 					footer
@@ -97,10 +97,12 @@ export default
 				min-width 400px
 
 			.close-button
+				background transparent
+				border 0
 				position absolute
-				top 0
+				top 1rem
 				right 0
-				padding 1rem
+				padding 0 0.5rem
 				opacity 0.5
 				transition opacity 0.5s ease
 				cursor pointer

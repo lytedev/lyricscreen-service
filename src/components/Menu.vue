@@ -40,8 +40,8 @@ export default
 		ul
 			li.separator
 			li.row
-				a.item(@click="showLoginRegisterModal('login')") Login
-				a.item(@click="showLoginRegisterModal('register')") Register
+				btn.item(tabindex="0" @click="showLoginRegisterModal('login')") Login
+				btn.item(tabindex="0" @click="showLoginRegisterModal('register')") Register
 </template>
 
 <style lang="stylus">
@@ -73,6 +73,12 @@ export default
 		list-style none
 		padding 0
 		margin 0
+
+		button
+			background transparent
+			border 0
+			padding 0
+			margin 0
 
 		li
 			padding 1rem

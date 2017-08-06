@@ -10,6 +10,7 @@ export default
 		currentMenu: 'SongListMenu'
 		showMenu: false
 	computed:
+		process: -> process
 		menuButtonText: ->
 			if this.isMenuShowing then 'Hide Menu'
 			else 'Show Menu'
@@ -25,6 +26,7 @@ export default
 	.content
 		p: btn.menu-toggle(@click="toggleMenu") {{ menuButtonText }}
 		p Index Page
+		p {{ process }}
 </template>
 
 <style lang="stylus">
