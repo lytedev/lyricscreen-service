@@ -12,5 +12,19 @@ export default new Router
 			path: '/'
 			name: 'index'
 			component: Index
+			children: [
+				{
+					path: '/about'
+					name: 'about'
+				}
+				{
+					path: '/login'
+					name: 'login'
+				}
+				{
+					path: '/register'
+					name: 'register'
+				}
+			]
 		}
 	]

@@ -12,8 +12,9 @@ export default
 		subtitle:
 			default: "Menu Subtitle"
 	data: ->
-		showLoginRegister: false
-		lrmView: 'login'
+		showLoginRegister: this.$route.name == 'login' or
+			this.$route.name == 'register'
+		lrmView: if this.$route.name == 'register' then 'register' else 'login'
 	computed:
 		songs: -> this.$store.getters.currentSongs
 	components:
@@ -56,7 +57,7 @@ export default
 
 	transition margin-left 0.5s cubic-bezier(0, 0.73, 0, 0.99), opacity 1.5s cubic-bezier(0, 0.73, 0, 0.99)
 	margin-left -30rem
-	opacity 0
+	opacity 1
 
 	display flex
 	flex-direction column

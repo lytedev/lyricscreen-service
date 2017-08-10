@@ -9,7 +9,7 @@ export default
 			default: true
 	data: ->
 		title: 'Song List'
-		showAbout: false
+		showAbout: this.$route.name == 'about'
 	computed:
 		playlist: -> this.$store.getters.currentPlaylist
 		songs: -> this.$store.getters.currentSongs
