@@ -39,6 +39,9 @@ p
 p ~ p
 	margin-top 1em
 
+a
+	color $brand-primary-color
+
 .page
 	display flex
 	position relative

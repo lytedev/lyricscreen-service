@@ -8,9 +8,16 @@ export default
 			default: ""
 		show:
 			default: false
+	created: (args...) ->
+		@keydown.bind this
+		window.addEventListener 'keydown', @keydown
+		if not @show then return
 	methods:
+		keydown: (e) ->
+			if e.keyCode == 27 and @show # keyCode 27 = Escape
+				@close()
 		close: (args...) ->
-			this.$emit 'close'
+			@$emit 'close'
 	components:
 		Btn: Button
 </script>

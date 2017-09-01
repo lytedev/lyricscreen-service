@@ -24,7 +24,12 @@ export default
 modal#about-modal(title="About" :show="show" @close="close")
 	div(slot="content")
 		logo
-		p.text-center v{{ version }}
+		p.text-center: small v{{ version }}
+		p.text-center
+			= "Created by "
+			a(target="_blank" href="https://lytedev.io") Daniel Flanagan
+		p.text-center
+			| Thank you for using my app! ❤️
 	div(slot="actions")
 		btn(@click.stop.prevent="close") Close
 </template>
