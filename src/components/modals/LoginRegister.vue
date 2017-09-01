@@ -80,7 +80,7 @@ export default {
 modal#login-register-modal(:title="title" :show="show" @close="close")
 	div(slot="content")
 		.login-form(v-if="_view == 'login'")
-			form
+			form(@submit="submitForm")
 				.field
 					label(for="email")
 					input(id="email" name="email" placeholder="Email" tabindex="100")
@@ -91,7 +91,7 @@ modal#login-register-modal(:title="title" :show="show" @close="close")
 				btn.small.negative(@click="overrideView = 'register'" tabindex="105") Register Here!
 
 		.register-form(v-if="_view == 'register'")
-			form(:action="apiUrl + '/users'" ref="registerForm")
+			form(@submit="submitForm" :action="apiUrl + '/users'" ref="registerForm")
 				//- TODO: captcha pliss
 				//- .field
 					label(for="username")
