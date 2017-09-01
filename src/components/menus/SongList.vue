@@ -1,7 +1,6 @@
 <script lang="coffee">
 import Menu from '@/components/Menu'
 import Button from '@/components/Button'
-import AboutModal from '@/components/modals/About'
 
 export default
 	props:
@@ -9,31 +8,21 @@ export default
 			default: true
 	data: ->
 		title: 'Song List'
-		showAbout: false
 	computed:
 		playlist: -> this.$store.getters.currentPlaylist
 		songs: -> this.$store.getters.currentSongs
 		subtitle: -> 'Playlist: ' + this.playlist.name
-	methods:
-		closeAbout: -> this.showAbout = false
 	components:
 		Btn: Button
 		SideMenu: Menu
-		AboutModal: AboutModal
 </script>
 
 <template lang="pug">
 side-menu(:show="show" title="Song List" :subtitle="subtitle")
-	about-modal(:show="showAbout" @close="closeAbout")
 	ul
 		li(v-for="s in songs"): btn {{ s.name }}
 		li.separator
 		li: btn Add Song...
-
-	.bottom
-		ul
-			li.separator
-			li(@click="showAbout = true") About
 </template>
 
 <style lang="stylus">

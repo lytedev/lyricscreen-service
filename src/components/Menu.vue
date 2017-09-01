@@ -2,6 +2,7 @@
 import LoginRegisterModal from '@/components/modals/LoginRegister'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
+import AboutModal from '@/components/modals/About'
 
 export default
 	props:
@@ -12,15 +13,19 @@ export default
 		subtitle:
 			default: "Menu Subtitle"
 	data: ->
-		showLoginRegister: false
-		lrmView: 'login'
+		showLoginRegister: this.$route.name == 'login' or
+			this.$route.name == 'register'
+		lrmView: if this.$route.name == 'register' then 'register' else 'login'
+		showAbout: this.$route.name == 'about'
 	computed:
 		songs: -> this.$store.getters.currentSongs
 	components:
 		Logo: Logo
 		LoginRegisterModal: LoginRegisterModal
 		Btn: Button
+		AboutModal: AboutModal
 	methods:
+		closeAbout: -> this.showAbout = false
 		showLoginRegisterModal: (view) ->
 			this.lrmView = view
 			this.showLoginRegister = true
@@ -32,16 +37,20 @@ export default
 <template lang="pug">
 .menu(:class="{ shown: show }")
 	login-register-modal(:show="showLoginRegister" @close="closeLoginRegisterModal" :view="lrmView")
+	about-modal(:show="showAbout" @close="closeAbout")
 	header
 		.title {{ title }}
 		.subtitle(v-show="subtitle.length > 0") {{ subtitle }}
 	slot
 	slot(name="user")
-		ul
+		ul.bottom
 			li.separator
 			li.row
 				btn.item(tabindex="0" @click="showLoginRegisterModal('login')") Login
 				btn.item(tabindex="0" @click="showLoginRegisterModal('register')") Register
+			li.separator
+			li.row
+				btn.item(tabindex="0" @click="showAbout = true") About
 </template>
 
 <style lang="stylus">
@@ -56,7 +65,7 @@ export default
 
 	transition margin-left 0.5s cubic-bezier(0, 0.73, 0, 0.99), opacity 1.5s cubic-bezier(0, 0.73, 0, 0.99)
 	margin-left -30rem
-	opacity 0
+	opacity 1
 
 	display flex
 	flex-direction column
